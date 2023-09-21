@@ -51,25 +51,26 @@ search = inp.send_keys('Renault Logan')
 inp.send_keys(Keys.ENTER)
 sleep(3)
 
-# #Найти кнопку Город +++
-# inp = browser.find_element(By.CSS_SELECTOR, "[class='desktop-nev1ty']").click()
-# sleep(2)
-# #Нашли кнопку ввода
-# sear = browser.find_element(By.CSS_SELECTOR,"[data-marker='popup-location/region/input']")
-# sear.send_keys(Keys.CONTROL, "a")
-# #city
-# sear.send_keys('Ярославль')
-#
-# sleep(2)
-# #Показать обьявления
-# sear = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location']").click()
-#
-# sleep(2)
+#Найти кнопку Город +++
+inp = browser.find_element(By.CSS_SELECTOR, "[class='desktop-nev1ty']").click()
+sleep(2)
+#Нашли кнопку ввода
+sear = browser.find_element(By.CSS_SELECTOR,"[data-marker='popup-location/region/input']")
+sear.send_keys(Keys.CONTROL, "a")
+#city
+sear.send_keys('Ярославль')
+
+sleep(2)
+#Показать обьявления
+sear = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location']").click()
+
+sleep(2)
 
 
 #Цена от   до
 # price_one = request.POST.get("price_one")
 # price_two = request.POST.get("price_two")
+
 inp = browser.find_element(By.CSS_SELECTOR,"[data-marker='price/from']")
 inp.send_keys('500000')
 inp.send_keys(Keys.ENTER)

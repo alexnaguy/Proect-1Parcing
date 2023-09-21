@@ -17,6 +17,11 @@ import time
 class WebdriverChrome:
 
     #Прописать параметры класса- self.options , self.browser
+    user_agent: UserAgent
+    options : webdriver.ChromeOptions()
+    options_add = options.add_argument(f"user-agent= {user_agent.chrome}")
+    browser : webdriver.Chrome(options= options_add)
+
 
     def __init__(self, url: str):
         self.url = url

@@ -17,10 +17,9 @@ import time
 class WebdriverChrome:
 
     #Прописать параметры класса- self.options , self.browser
-    user_agent: UserAgent
+    user_agent: UserAgent()
     options : webdriver.ChromeOptions()
-    options_add : options.add_argument
-    browser : webdriver.Chrome
+    browser : webdriver.Chrome()
 
 
     def __init__(self, url: str):
@@ -61,8 +60,7 @@ class WebdriverChrome:
 
 class FilterManageAvito(WebdriverChrome):
 
-    def __init__(self, brand_auto):
-        self.brand_auto = brand_auto
+
 
 
     @staticmethod
@@ -70,6 +68,7 @@ class FilterManageAvito(WebdriverChrome):
         """
         Находит кнопку ввода для поиска марки и модели
         """
+        # !!!! Нужен ли для переменной input- "self" ?
 
         # Нашли кнопку ввода марки и модели автомобиля
         input = self.browser.find_element(By.CSS_SELECTOR, "[data-marker='search-form/suggest']")

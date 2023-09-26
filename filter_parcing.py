@@ -62,7 +62,7 @@ sear.send_keys('Ярославль')
 
 sleep(2)
 #Показать обьявления
-sear = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location']").click()
+sear = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location/save-button']").click()
 
 sleep(2)
 

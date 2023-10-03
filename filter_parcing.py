@@ -106,18 +106,20 @@ sleep(3)
 print("Успешно введены года !")
 #Число владельцев по ПТС
 print(f"________________________мы тут")
-inp = browser.find_element(By.XPATH, "//*[@id='app']/div/div[4]/div/div[2]/div[3]/div[1]/div/div[2]/div[1]/form/div[18]/div/div[2]/div/div/div/div/div/select/option[2]")
+inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='option(19984)']")
 inp.click()
 sleep(3)
 print("Успешно выбрано число  владельцев!")
 # Частные объявления
-inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='user(1)/text']")
+inp = browser.find_element(By.XPATH, "//*[@id='app']/div/div[4]/div/div[2]/div[3]/div[1]/div/div[2]/div[1]/form/div[30]/div/div/div/div/div/div/div/div[2]/label/span")
 inp.click()
 sleep(3)
+print("Частные объвления")
 
-inp = browser.find_element(By.XPATH, "//*[@id='app']/div/div[4]/div/div[2]/div[3]/div[1]/div/div[2]/div[3]/div/button[1]")
+inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='search-filters/submit-button']")
 inp.click()
 sleep(15)
+print("Все успешно")
 
 
 

@@ -58,12 +58,38 @@ class WebdriverChrome:
         self.browser = self.browser.get(self.url)
 
 
+
+class AbstractFilter(WebdriverChrome):
+
+
+    def search_button(self):
+        # by_selector = By.CSS_SELECTOR
+        # selector = "[data-marker='search-form/suggest']"
+        button = self.browser.find_element(By.CSS_SELECTOR, "[data-marker='search-form/suggest']")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def input_query(self, query):
+
+
+
+
+
+
 class FilterManageAvito(WebdriverChrome):
 
 
-
-
-    @staticmethod
     def search_input_button(self):
         """
         Находит кнопку ввода для поиска марки и модели
@@ -73,7 +99,8 @@ class FilterManageAvito(WebdriverChrome):
         # Нашли кнопку ввода марки и модели автомобиля
         input = self.browser.find_element(By.CSS_SELECTOR, "[data-marker='search-form/suggest']")
         # Вбили в поисковик Марку модель (Renault Logan)
-        input.send_keys(self.brand_auto)
+
+        input.send_keys("Renault Logan")
         # Нажали ENTER
         input.send_keys(Keys.ENTER)
         sleep(3)
@@ -96,7 +123,7 @@ class FilterManageAvito(WebdriverChrome):
 
 
 
-class AvitoParser:
+
 
 
 

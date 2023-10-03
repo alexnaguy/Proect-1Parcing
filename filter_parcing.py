@@ -1,8 +1,10 @@
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait as wait
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
+
+
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -62,16 +64,27 @@ sear.send_keys('Ярославль')
 
 sleep(2)
 #Показать обьявления
+
+
+
+sear = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location/save-button']").click()
+sleep(1)
 sear = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location/save-button']").click()
 
-sleep(2)
+
+sleep(5)
 
 
 #Цена от   до
 # price_one = request.POST.get("price_one")
 # price_two = request.POST.get("price_two")
+inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='price/from']")
+wait = WebDriverWait(browser, timeout=2)
 
-inp = browser.find_element(By.CSS_SELECTOR,"[data-marker='price/from']")
+browser.find_element(By.CSS_SELECTOR, "[data-marker='price/from']").click()
+wait.until(lambda d: inp.is_displayed())
+
+# inp = browser.find_element(By.CSS_SELECTOR,"[data-marker='price/from']")
 inp.send_keys('500000')
 inp.send_keys(Keys.ENTER)
 
@@ -82,24 +95,25 @@ print("Успешно введены цены !")
 sleep(2)
 
 #Год  от .... до
-inp = browser.find_element(By.XPATH, "//*[@id='app']/div/div[4]/div/div[2]/div[3]/div[1]/div/div[2]/div[1]/form/div[8]/div/div[2]/div/div/div/div/div[1]/div/input")
+inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='params[188]/from/input']")
 inp.send_keys('2005')
 inp.send_keys(Keys.ENTER)
 
-inp = browser.find_element(By.XPATH, "//*[@id='app']/div/div[4]/div/div[2]/div[3]/div[1]/div/div[2]/div[1]/form/div[8]/div/div[2]/div/div/div/div/div[2]/div/input")
+inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='params[188]/to/input']")
 inp.send_keys('2010')
 inp.send_keys(Keys.ENTER)
 sleep(3)
 print("Успешно введены года !")
 #Число владельцев по ПТС
+print(f"________________________мы тут")
 inp = browser.find_element(By.XPATH, "//*[@id='app']/div/div[4]/div/div[2]/div[3]/div[1]/div/div[2]/div[1]/form/div[18]/div/div[2]/div/div/div/div/div/select/option[2]")
 inp.click()
 sleep(3)
 print("Успешно выбрано число  владельцев!")
-#Частные объявления
-# inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='user(1)/text']")
-# inp.click()
-# sleep(3)
+# Частные объявления
+inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='user(1)/text']")
+inp.click()
+sleep(3)
 
 inp = browser.find_element(By.XPATH, "//*[@id='app']/div/div[4]/div/div[2]/div[3]/div[1]/div/div[2]/div[3]/div/button[1]")
 inp.click()

@@ -61,16 +61,12 @@ sear = browser.find_element(By.CSS_SELECTOR,"[data-marker='popup-location/region
 sear.send_keys(Keys.CONTROL, "a")
 #city
 sear.send_keys('Ярославль')
-
 sleep(2)
+
 #Показать обьявления
-
-
-
 sear = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location/save-button']").click()
 sleep(1)
 sear = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location/save-button']").click()
-
 
 sleep(5)
 
@@ -104,6 +100,8 @@ inp.send_keys('2010')
 inp.send_keys(Keys.ENTER)
 sleep(3)
 print("Успешно введены года !")
+
+
 #Число владельцев по ПТС
 print(f"________________________мы тут")
 inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='option(19984)']")

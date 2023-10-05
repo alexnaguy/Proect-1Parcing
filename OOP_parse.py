@@ -11,7 +11,33 @@ import random
 from fake_useragent import UserAgent
 
 from abc import ABC, abstractmethod
-import time
+import datetime
+import json
+
+
+class WebdriverChrome:
+    def __init__(self, url: str):
+        pass
+
+    def connect_proxy(self):
+        """
+        Подключает различные IPI адресса (прокси серверы)
+        """
+        pass
+    def connect_options_webdriver(self):
+        """
+        Подключает вебдрайвер и добавляет опции различных IPI адрессов
+        """
+        pass
+
+    def include_browser(self):
+        """
+        Подключили вэбдрайвер и применили опции
+        """
+        pass
+
+    def __get_url(self):
+        pass
 
 
 class AbstractClassFilter(ABC):
@@ -21,7 +47,6 @@ class AbstractClassFilter(ABC):
 
     @abstractmethod
     def connect_proxy(self):
-
         """
         Подключает различные IPI адресса (прокси серверы)
         """
@@ -75,10 +100,6 @@ class AbstractClassFilter(ABC):
     @abstractmethod
     def search_button_show_ads(self):
         pass
-
-
-
-
 
 class FilterAvitoCar(AbstractClassFilter):
 
@@ -227,6 +248,95 @@ class FilterAvitoCar(AbstractClassFilter):
         print("Идет поиск объявлений по заданным параметрам")
 
 
+class AvitoParse(FilterAvitoCar):
+#Конструктор класса
+    def __init__(self, count = 100):
+        # self.url = url
+        # self.items = items
+        self.count = count
+        # self.version_main = version_main
+        self.data = []
+
+
+
+    def __paginator(self):
+        #Находим в браузере кнопку "Следующая страница"
+        while self.browser.find_elements(By.CSS_SELECTOR, "[data-marker='pagination-button/next']") and self.count > 0:
+            self.__parse_page()
+            #Если есть делаем клик на кнопку Next
+            self.browser.find_element(By.CSS_SELECTOR, "[data-marker='pagination-button/next']").click()
+            self.count -= 1
+
+
+#Парсинг одной страницы
+    def __parse_page(self):
+        """
+        Берет  все объвления на одной странице и парсит (собирает данные) для каждого значения:
+        name, description, url, price, date_car.
+        Затем собирает их в список и сохраняет в формате json.
+        :return:
+        """
+
+        #Находим все объявления
+        titles = self.browser.find_elements(By.CSS_SELECTOR,"[data-marker='item']")
+
+        for title in titles:
+
+            #Находим название объявления
+            name = title.find_element(By.CSS_SELECTOR, "[itemprop='name']").text
+
+            #description = title.find_element(By.CSS_SELECTOR, "[class*= 'item-descriptionStep']").text
+            description = title.find_element(By.CSS_SELECTOR, "[data-marker='item-specific-params']").text
+            url = title.find_element(By.CSS_SELECTOR, "[data-marker= 'item-title']").get_attribute("href")
+            price = title.find_element(By.CSS_SELECTOR, "[itemprop='price']").get_attribute("content")
+            price = price +" " + "руб."
+            date_car_par = title.find_element(By.CSS_SELECTOR, "[data-marker='item-date/tooltip/reference']").text
+            # date_car = str(date_car_par)[8:10]
+            # date_car = int(date_car)
+            # Дата сегодня минус день назад
+            past_date = str(datetime.datetime.today() - datetime.timedelta(days=1))
+            #past_date = int(past_date[8:10])
+
+            # Использвать срез
+            if date_car_par > past_date:
+                print(date_car_par)
+                data = {
+                    "name": name,
+                    "url": url,
+                    "price": price,
+                    "description": description,
+                    "date": date_car_par
+
+                }
+
+                self.data.append(data)
+            else:
+                print(f"Объявлений за сегодня не найдено.")
+            #print(name, url, price )
+        self.save_data()
+
+
+    def parse(self):
+        self.__paginator()
+        self.__parse_page()
+
+    def save_data(self):
+        """
+        Сохраняет записанные данные в формате json.
+        :return:
+        """
+        with open("cars.json", "w", encoding='utf-8') as f:
+            json.dump(self.data, f, ensure_ascii=False, indent= 4)
+        print(f"Запись произведена успешно.")
+
+
+
+
+if __name__ == "__main__":
+
+
+    AvitoParse(url= "https://www.avito.ru/all/avtomobili/ford/focus/i-ASgBAgICA0Tgtg2cmCjitg3CpSjqtg3c8ig?cd=1",
+                           ).parse()
 
 
 
@@ -253,25 +363,10 @@ class FilterAvitoCar(AbstractClassFilter):
 
 
 
-class FilterManageAvito(WebdriverChrome):
 
 
 
 
-    def search_city_button(self):
-        # Нашли кнопку Город +++
-        self.input = self.browser.find_element(By.CSS_SELECTOR, "[class='desktop-nev1ty']").click()
-        sleep(2)
-        # Нашли кнопку ввода города
-        sear = self.browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location/region/input']")
-        sear.send_keys(Keys.CONTROL, "a")
-        sear.send_keys('Ярославль')
-        sleep(2)
-        # Нашли кнопку Показать обьявления
-        sear = self.browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location']").click()
-        sleep(2)
-        sear.send_keys(Keys.ENTER)
-        sleep(3)
 
 
 

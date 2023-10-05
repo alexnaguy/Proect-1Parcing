@@ -65,10 +65,12 @@ sleep(2)
 
 #Показать обьявления
 sear = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location/save-button']").click()
-sleep(1)
-sear = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location/save-button']").click()
 
-sleep(5)
+sleep(10)
+res = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location/save-button']").click()
+wait = WebDriverWait(browser, timeout=5)
+print("_____________здесь!!!")
+
 
 
 #Цена от   до

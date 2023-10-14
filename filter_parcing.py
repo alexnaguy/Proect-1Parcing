@@ -12,13 +12,6 @@ from time import sleep
 import random
 from fake_useragent import UserAgent
 
-        # brand = request.POST.get("brand")
-        # model = request.POST.get("model")
-        # price_one = request.POST.get("price_one")
-        # price_two = request.POST.get("price_two")
-        # year_one = request.POST.get("year_one")
-        # year_two = request.POST.get("year_two")
-        # city = request.POST.get("city")
 
 # Список Юзер-агентов (замена IPI адрессов)
 # user_agents_list = [
@@ -48,7 +41,7 @@ browser.get(url)
 #Нашли кнопку
 inp = browser.find_element(By.CSS_SELECTOR,"[data-marker='search-form/suggest']")
 # Вбили в поисковик brand + model
-search = inp.send_keys('Renault Logan')
+search = inp.send_keys('Ford Focus')
 #Нажали ENTER
 inp.send_keys(Keys.ENTER)
 sleep(3)
@@ -62,8 +55,12 @@ sear.send_keys(Keys.CONTROL, "a")
 #city
 sear.send_keys('Ярославль')
 sleep(2)
-
+inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='suggest(0)']")
+inp.click()
 #Показать обьявления
+# wait = WebDriverWait(browser, 5)
+# element = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-marker='popup-location/save-button']")))
+
 sear = browser.find_element(By.CSS_SELECTOR, "[data-marker='popup-location/save-button']").click()
 
 sleep(10)
@@ -74,17 +71,46 @@ print("_____________здесь!!!")
 
 
 #Цена от   до
-# price_one = request.POST.get("price_one")
-# price_two = request.POST.get("price_two")
+
 inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='price/from']")
 wait = WebDriverWait(browser, timeout=2)
-
 browser.find_element(By.CSS_SELECTOR, "[data-marker='price/from']").click()
 wait.until(lambda d: inp.is_displayed())
 
 # inp = browser.find_element(By.CSS_SELECTOR,"[data-marker='price/from']")
 inp.send_keys('500000')
 inp.send_keys(Keys.ENTER)
+
+
+
+
+#Цена от   до
+#Перкинул от Коли
+
+inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='price/from']")
+wait = WebDriverWait(browser, timeout=2)
+
+browser.find_element(By.CSS_SELECTOR, "[data-marker='price/from']").click()
+wait.until(lambda d: inp.is_displayed())
+
+inp = browser.find_element(By.CSS_SELECTOR,"[data-marker='price/from']")
+inp.send_keys('500000')
+inp.send_keys(Keys.ENTER)
+
+
+
+
+#Моёёё
+
+# inps = browser.find_element(By.CSS_SELECTOR, "[data-marker='price/from']")
+# waits = WebDriverWait(browser, timeout=5)
+#
+# waits.until(lambda d: inps.is_displayed())
+# #inp = browser.find_element(By.CSS_SELECTOR,"[data-marker='price/from']")
+# inps.send_keys('500000')
+# inps.send_keys(Keys.ENTER)
+
+
 
 inp = browser.find_element(By.CSS_SELECTOR,"[data-marker='price/to']")
 inp.send_keys('700000')
@@ -110,16 +136,17 @@ inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='option(19984)']")
 inp.click()
 sleep(3)
 print("Успешно выбрано число  владельцев!")
-# Частные объявления
-inp = browser.find_element(By.XPATH, "//*[@id='app']/div/div[4]/div/div[2]/div[3]/div[1]/div/div[2]/div[1]/form/div[30]/div/div/div/div/div/div/div/div[2]/label/span")
-inp.click()
-sleep(3)
-print("Частные объвления")
+#Частные объявления
+# inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='user(1)/input']")
+# inp.click()
+# sleep(3)
+#
+# print("Частные объвления")
 
 inp = browser.find_element(By.CSS_SELECTOR, "[data-marker='search-filters/submit-button']")
 inp.click()
 sleep(15)
-print("Все успешно")
+print("Объявления готовы для парсинга !")
 
 
 
